@@ -1,0 +1,30 @@
+SQL
+
+- Users table
+	- type (flat/admin)
+	- name
+	- spotify link
+	- account info (google sign in / instagram?)
+	
+- Requests table (FK to Users table)
+	- request start date
+	
+	- effective start date
+	- effective end date
+	
+	- status (under study, waiting for info/pre-approved, under study, rejected, cancelled, approved)
+
+	- step in the flow
+	- auto estimated income
+	- auto estimated payment to recover
+	- comments (from admin)
+	
+	- calculated income (by admin)
+	- final payment to recover (by admin)
+	
+- Contracts table (FK to Requests table)
+	- signed?
+	- path
+	
+- Files table (FK to Requests table)
+	- path

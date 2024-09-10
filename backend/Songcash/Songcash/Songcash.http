@@ -1,0 +1,6 @@
+@Songcash_HostAddress = http://localhost:5121
+
+GET {{Songcash_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
