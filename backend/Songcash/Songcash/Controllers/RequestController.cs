@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Songcash.Dto;
-using Songcash.Model;
 using Songcash.Service;
 
 namespace Songcash.Controllers;
@@ -29,11 +28,10 @@ public class RequestsController : ControllerBase
 
         var result = await _requestService.CreateRequest(requestDto);
 
-
         return Ok(new
         {
             Message = "Request created successfully",
-            RequestId = result.Id,
+            RequestId = "",
         });
     }
 
@@ -48,7 +46,6 @@ public class RequestsController : ControllerBase
         }
 
         var result = await _requestService.UpdateRequest(requestDto);
-
 
         return Ok(new
         {

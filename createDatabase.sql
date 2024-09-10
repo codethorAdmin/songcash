@@ -6,7 +6,6 @@ CREATE TABLE Users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     type TINYINT NOT NULL, -- 0 for flat, 1 for admin
     name VARCHAR(100) NOT NULL,
-    spotify_link VARCHAR(300) -- nullable
 );
 
 -- Table: Requests
@@ -22,6 +21,7 @@ CREATE TABLE Requests (
     auto_estimated_payment_to_recover INT,
     calculated_income INT,
     final_payment_to_recover INT,
+    spotify_link VARCHAR(300) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 

@@ -3,7 +3,7 @@
     public class CreateRequestDto
     {
         public string SpotifyLink { get; set; }
-        public string UserName { get; set; }
-        public int EstimatedIncome { get; set; }
+        public int AutoEstimatedIncome { get; set; }
+        public int AutoEstimatedPaymentToRecover { get; set; }
     }
 }

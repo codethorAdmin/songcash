@@ -18,11 +18,14 @@ namespace Songcash.Service
             _requestRepository = requestRepository;
         }
 
-        public async Task<Request> CreateRequest(CreateRequestDto requestDto)
+        public async Task<int> CreateRequest(CreateRequestDto requestDto)
         {
             var completeRequest = new Request
             {
-
+                AutoEstimatedIncome = requestDto.AutoEstimatedIncome,
+                AutoEstimatedPaymentToRecover = requestDto.AutoEstimatedPaymentToRecover,
+                UserId = 1,
+                SpotifyLink = requestDto.SpotifyLink
             };
 
             return await _requestRepository.CreateRequest(completeRequest);
