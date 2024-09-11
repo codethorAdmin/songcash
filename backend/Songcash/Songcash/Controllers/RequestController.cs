@@ -18,7 +18,7 @@ public class RequestsController : ControllerBase
 
     // POST: api/requests
     [HttpPost]
-    [Authorize]
+    //[Authorize]
     public async Task<IActionResult> CreateRequest([FromBody] CreateRequestDto requestDto)
     {
         if (!ModelState.IsValid)
@@ -37,7 +37,7 @@ public class RequestsController : ControllerBase
 
     // PUT: api/requests
     [HttpPut]
-    [Authorize]
+    //[Authorize]
     public async Task<IActionResult> UpdateRequest([FromBody] UpdateRequestDto requestDto)
     {
         if (!ModelState.IsValid)
