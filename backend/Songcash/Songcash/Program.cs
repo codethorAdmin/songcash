@@ -63,6 +63,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<RequestService>();
 builder.Services.AddScoped<RequestRepository>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<UserRepository>();
 
 var app = builder.Build();
 

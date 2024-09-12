@@ -3,26 +3,30 @@ using Songcash.Configuration;
 using Songcash.Model;
 using MySql.Data.MySqlClient;
 using Dapper;
+using Songcash.Model.Dto;
 
-namespace Songcash.Repository
+namespace Songcash.Repository;
+
+public class RequestRepository
 {
-    public class RequestRepository
+    private string _connectionString;
+
+    public RequestRepository(IOptions<DatabaseConfiguration> options)
     {
-        private string _connectionString;
+        _connectionString = options.Value.ConnectionString;
+    }
 
-        public RequestRepository(IOptions<DatabaseConfiguration> options)
-        {
-            _connectionString = options.Value.ConnectionString;
-        }
+    public async Task<CreatedRequestResultDto> CreateRequest(Request request)
+    {
+        var connection = new MySqlConnection(_connectionString);
 
-        public async Task<int> CreateRequest(Request request)
+        try
         {
-            var connection = new MySqlConnection(_connectionString);
             await connection.OpenAsync();
 
             var insertQuery = @"INSERT INTO Requests (user_id, request_start_date, effective_start_date, effective_end_date, status, step_in_flow, auto_estimated_income, auto_estimated_payment_to_recover, calculated_income, final_payment_to_recover, spotify_link)
                 VALUES (@UserId, @RequestStartDate, @EffectiveStartDate, @EffectiveEndDate, @Status, @StepInFlow, @AutoEstimatedIncome, @AutoEstimatedPaymentToRecover, @CalculatedIncome, @FinalPaymentToRecover, @SpotifyLink, @UserName)";
-            var rowsAffected = await connection.ExecuteAsync(insertQuery,
+            _ = await connection.ExecuteAsync(insertQuery,
                 new
                 {
                     UserId = request.UserId,
@@ -38,14 +42,21 @@ namespace Songcash.Repository
                     SpotifyLink = request.SpotifyLink,
                 });
 
-            await connection.CloseAsync();
-
-            return rowsAffected;
+            return new CreatedRequestResultDto
+            {
+                InsertedId = await connection.GetInsertedId(),
+                Request = request
+            };
         }
-
-        public async Task<Request> UpdateRequest(Request request)
+        finally
         {
-            throw new NotImplementedException();
+            await connection.CloseAsync();
         }
     }
+
+    public async Task<Request> UpdateRequest(Request request)
+    {
+        throw new NotImplementedException();
+    }
 }
+

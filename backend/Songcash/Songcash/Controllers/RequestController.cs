@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Songcash.Dto;
+using Songcash.Helpers;
 using Songcash.Service;
 
 namespace Songcash.Controllers;
@@ -18,7 +19,7 @@ public class RequestsController : ControllerBase
 
     // POST: api/requests
     [HttpPost]
-    //[Authorize]
+    [Authorize]
     public async Task<IActionResult> CreateRequest([FromBody] CreateRequestDto requestDto)
     {
         if (!ModelState.IsValid)
@@ -26,13 +27,13 @@ public class RequestsController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _requestService.CreateRequest(requestDto);
+        var rawToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        var token = JwtHelper.FromRawTokenToJwtToken(rawToken);
+        var email = token.Claims.FirstOrDefault(c => c.Type == "email")?.Value!;
 
-        return Ok(new
-        {
-            Message = "Request created successfully",
-            RequestId = "",
-        });
+        var createdRequest = await _requestService.CreateRequest(requestDto, email);
+
+        return Created($"/api/requests/{createdRequest.InsertedId}", createdRequest.Request);
     }
 
     // PUT: api/requests
