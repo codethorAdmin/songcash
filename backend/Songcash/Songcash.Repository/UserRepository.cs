@@ -24,7 +24,7 @@ public class UserRepository
         {
             await connection.OpenAsync();
 
-            var user = await connection.QueryAsync<User>("SELECT Email FROM Users WHERE Email = @Email LIMIT 1 ", new { Email = email });
+            var user = await connection.QueryAsync<User>("SELECT Id, Type, Name, Email FROM Users WHERE Email = @Email LIMIT 1 ", new { Email = email });
             if (!user.Any())
             {
                 throw new ArgumentException("Request cannot be processed because User is incorrect");

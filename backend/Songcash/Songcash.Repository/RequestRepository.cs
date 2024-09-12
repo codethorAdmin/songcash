@@ -24,8 +24,8 @@ public class RequestRepository
         {
             await connection.OpenAsync();
 
-            var insertQuery = @"INSERT INTO Requests (user_id, request_start_date, effective_start_date, effective_end_date, status, step_in_flow, auto_estimated_income, auto_estimated_payment_to_recover, calculated_income, final_payment_to_recover, spotify_link)
-                VALUES (@UserId, @RequestStartDate, @EffectiveStartDate, @EffectiveEndDate, @Status, @StepInFlow, @AutoEstimatedIncome, @AutoEstimatedPaymentToRecover, @CalculatedIncome, @FinalPaymentToRecover, @SpotifyLink, @UserName)";
+            var insertQuery = @"INSERT INTO Requests (UserId, RequestStartDate, EffectiveStartDate, EffectiveEndDate, Status, StepInFlow, AutoEstimatedIncome, AutoEstimatedPaymentToRecover, CalculatedIncome, FinalPaymentToRecover, SpotifyLink)
+                VALUES (@UserId, @RequestStartDate, @EffectiveStartDate, @EffectiveEndDate, @Status, @StepInFlow, @AutoEstimatedIncome, @AutoEstimatedPaymentToRecover, @CalculatedIncome, @FinalPaymentToRecover, @SpotifyLink)";
             _ = await connection.ExecuteAsync(insertQuery,
                 new
                 {
